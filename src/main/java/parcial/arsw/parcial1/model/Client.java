@@ -12,10 +12,11 @@ import java.util.HashMap;
  */
 public class Client {
 
-    private static final String USER_AGENT = "Mozilla/5.0";
-    //private static final String GET_URL = "https://www.alphavantage.co/query??function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=XAYXQXZQJVWAA98S";
-    private static final String BODY = "https://www.alphavantage.co/query?";
-    private static final String KEY="demo";
+    static APISend url = new AdvantageApi();
+
+    static final String USER_AGENT = url.getUserAgent();
+    static final String BODY = url.getBody();
+    static final String KEY = url.getKey();
 
     private static HashMap<String, String> cache = new HashMap<>();
 
@@ -33,32 +34,38 @@ public class Client {
         }else{
             newurl =  BODY + "function=" + type + "&symbol=" + val +"&apikey=" + KEY;
         }
-        URL obj = new URL(newurl);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        
-        //The following invocation perform the connection implicitly before getting the code
-        int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
-        
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+        if(cache.get(newurl) == null){
+            URL obj = new URL(newurl);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            
+            //The following invocation perform the connection implicitly before getting the code
+            int responseCode = con.getResponseCode();
+            System.out.println("GET Response Code :: " + responseCode);
+            
+            if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+    
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+    
+                // print result
+                cache.put(newurl, response.toString());
+               return response.toString();
+            } else {
+                return "GET request not worked";
             }
-            in.close();
-
-            // print result
-            cache.put(newurl, response.toString());
-           return response.toString();
-        } else {
-            return "GET request not worked";
+        }else{
+            System.out.println("cacheWorking");
+            return cache.get(newurl);
         }
+        
     }
 
     /**
