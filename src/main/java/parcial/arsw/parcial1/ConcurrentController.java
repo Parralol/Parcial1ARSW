@@ -29,7 +29,6 @@ public class ConcurrentController implements Runnable {
         for (Thread t : threads) {
             t.start();
         }
-        urls.stream().forEach(System.out::println);
     }
 
     @Override
