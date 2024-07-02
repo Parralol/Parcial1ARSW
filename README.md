@@ -6,13 +6,6 @@ This program allows the user to launch a RESTful server, Concurrent test client 
 
 ## Architecture 
 
-![Architecture](https://github.com/Parralol/Lab06ARSW/assets/110953563/e703ab22-b119-4165-8fab-f84a9e4474e2)
-
-As seen by the following diagram the user connects via browser to use the program, then he must connect via http using the 3000 port, this is because the React based client is working in that service, the client, of course, is provided by a cloud machine deployed in Amazon EC2, each connection starts sending data to our second EC2 server deployed to withstand Spring and to connect via http using the port 8080 (tomcat), this server will work as our Sync service for each client, this is because this service manages all dots drawn by each client, the server delivers an array as Json to all the clients so they get proccessed and interpreted.
-
-Once all has been done the clients draws all the dots (or erases everything given the user input), if the client decides to delete everything then in the server all data will be erased, there are some commands that cannot be used by the client and those are status and points, this exists just for debbuging reasons and verifying how everything works, however if seeing that is what the user desires the only thing that is needed to do is to try and connect via browser to the data server, each path that is described in the connection between Lab06Application and Lab06Controller is being delivered once, not all petitions at once.
-
-And so this is the why of this architecture.
 
 ## Getting Started
 
@@ -42,25 +35,44 @@ mvn -version
 First clone this proyect into your own system, then 
 
 ```
-mvn clean install
+mvn clean package
 ```
 
 ### Acceptance test
 
-https://github.com/Parralol/Lab06ARSW/assets/110953563/cac2d4bf-4d8c-4023-9336-6d97e072d54e
+#### AWS
 
-in case the video does not load, simply press F5 to refresh the github tab so that the video downloads as intended
+In the following acceptance test
 
-In the video we can see the EC2 instance hosting the server with various instances of the client running locally, as seen in the video the drawing updates and allows for multiple people drawing at the same time.
+![image](https://github.com/Parralol/Parcial1ARSW/assets/110953563/a84a9b12-7e3a-4d4c-8890-178dfc42bc4f)
 
-https://github.com/Parralol/Lab06ARSW/assets/110953563/664d7a14-1329-4660-9d1d-5fe338c549bb
+ we can see how the concurrent client and the server responds correspondly, however we get thos responses because we lack the proper keys to get the types of searches in the mock data besides the terminal
 
-in this video we test that the delete button works properly
+ ![image](https://github.com/Parralol/Parcial1ARSW/assets/110953563/c53e61f4-4492-4d18-9364-05ec839b24c9)
 
-https://github.com/Parralol/Lab06ARSW/assets/110953563/9d18ef29-ee58-404e-b1ad-3f8d30913548
+Here we can see how the program works at the 8080 port, searching MSFT with the TIME SERIES INTRADAY type of search, we get the following response from the server as seen by the client, in the server the we make the same search a couple of times to get
 
-here we can see the client and the server both deployed in EC2.
+![image](https://github.com/Parralol/Parcial1ARSW/assets/110953563/337bfb4d-a497-4344-b113-d6484e8d948a)
 
+the "cacheworking" message, this indicates that the cache inside of the system is working properly
+
+#### Locally
+
+![image](https://github.com/Parralol/Parcial1ARSW/assets/110953563/cdb19d2c-ab40-44b3-a323-26e840315279)
+
+In the following image we can see how the search is being used in a local enviroment, the search, as it should, gives the following answer via localhost in the 8080 port
+
+![image](https://github.com/Parralol/Parcial1ARSW/assets/110953563/e0a057ec-f610-4d00-b294-d39a8b9af572)
+
+as we can see, if we search it again we'll get the "cacheworking" message, indicating that the cache of the program works as it should
+
+![image](https://github.com/Parralol/Parcial1ARSW/assets/110953563/42f06a99-93f6-459c-b175-12708a70889f)
+
+Once we execute the concurrent test client, we get the following responses as it should, given the limitations in the API service
+
+![image](https://github.com/Parralol/Parcial1ARSW/assets/110953563/89fb321a-4c34-457e-9c1a-a1e33c578e14)
+
+Once executed the Concurrent test client we can see how the server resolved all the petitions made by it.
 
 ## Generating javadoc
 
@@ -126,8 +138,8 @@ or (depending on your system)
 mvn -e exec:java -Dexec'.mainClass=parcial.arsw.parcial1.ConcurrentController'
 ```
 
-
 you'll see the response in the terminal
+
 
 ## Built With
 
