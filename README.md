@@ -117,8 +117,15 @@ type: the search type.
 in order to deploy and use the Concurrent test client you'll need to enter the code below after you did the startup
 
 ```
-mvn -e exec:java -Dexec.mainClass=parcial.arsw.parcial1.model.Client
+mvn -e exec:java -Dexec.mainClass=parcial.arsw.parcial1.ConcurrentController
 ```
+
+or (depending on your system)
+
+```
+mvn -e exec:java -Dexec'.mainClass=parcial.arsw.parcial1.ConcurrentController'
+```
+
 
 you'll see the response in the terminal
 
