@@ -38,18 +38,22 @@ public class ConcurrentController implements Runnable {
     public void run() {
         Random rand = new Random();
         int n = rand.nextInt(1000);
+        String res = "";
         try {
-
-            String res = invoke.TestInvoke(urls.get(n));
+            res = invoke.TestInvoke(urls.get(n));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            System.out.println(res);
+        }
+        try {
+            
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject) parser.parse(res);
             System.out.println(json.toJSONString() + "\n");
             resp.add(res);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (ParseException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(res);
         }
     }
 
