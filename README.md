@@ -9,6 +9,9 @@ This program allows the user to launch a RESTful server, Concurrent test client 
 
 ## Architecture 
 
+![Parcial 1 ARSW](https://github.com/Parralol/Parcial1ARSW/assets/110953563/bf86367f-5a20-42af-bb8b-5d39e63b1862)
+
+In the following Architecture diagram we can see how the user connects directly to the JS client, along side it is also usable the concurrent test client, each java component is represented by the red filled cube, so every pettition gets to java application and gets redirected to java Controller via the /status and /rest paths with the quer and type values, if the /status path is selected, the controller will deliver the corresponding image, if the /rest path is selected, then it will comence the communication protocol, first it will create the url with the given data in APIsend, then it gets to the client(invoker) which handles the comunication with the API service, then the comunication flows back again from the client(invoker) to Parcial1Controller, then to Parcial1Application and finally in the JS client.
 
 ## Getting Started
 
