@@ -1,6 +1,9 @@
 # Parcial 1 ARSW
 
 This program allows the user to launch a RESTful server, Concurrent test client and WebClient
+
+[AWS server](http://ec2-54-162-85-101.compute-1.amazonaws.com:8080/)
+
 2024/07/2
 
 
