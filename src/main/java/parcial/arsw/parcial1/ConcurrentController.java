@@ -12,6 +12,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import parcial.arsw.parcial1.model.Client;
 
+/**
+ * Concurrent class to make multiple REST requests to the controller
+ */
 public class ConcurrentController implements Runnable {
 
     static JSONParser parser = new JSONParser();
@@ -50,6 +53,9 @@ public class ConcurrentController implements Runnable {
         }
     }
 
+    /**
+     * Allows to get all data stored in /resources/templates/MOCK_DATA.json, get names and types and save the data as an localhost url
+     */
     public static void fetchData() {
         try {
             JSONArray a = (JSONArray) parser.parse(new FileReader("src\\main\\resources\\templates\\MOCK_DATA.json"));

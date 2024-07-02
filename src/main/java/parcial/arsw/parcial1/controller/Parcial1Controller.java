@@ -14,6 +14,10 @@ import parcial.arsw.parcial1.model.Client;
 public class Parcial1Controller {
     private  Client client = new Client();
 
+    /**
+     * retrieves the server status 
+     * @return
+     */
     @RequestMapping(value = "/status", method = RequestMethod.GET, produces = "application/json")
     public String status() {
         return "{\"status\":\"Greetings from Spring Boot. "
@@ -22,6 +26,13 @@ public class Parcial1Controller {
                 + ". " + "The server is Runnig!\"}";
     }
 
+    /**
+     * implementation for the rest controller
+     * @param val value for the stock name
+     * @param type  type of data to be searched
+     * @return Json data
+     * @throws IOException
+     */
     @GetMapping("/rest")
     public String search(@RequestParam(value = "quer", defaultValue = "MSFT") String val, @RequestParam(value = "type", defaultValue = "TIME_SERIES_DAILY_ADJUSTED") String type) throws IOException{
         return client.invoke(val, type);

@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
+/**
+ * Rest class that allows to connect to any agent specified in the url component
+ */
 public class Client {
 
     private static final String USER_AGENT = "Mozilla/5.0";
@@ -16,6 +19,13 @@ public class Client {
 
     private static HashMap<String, String> cache = new HashMap<>();
 
+    /**
+     * Method to invoke a Restfull api and get it's corresponding response
+     * @param val value of the search
+     * @param type type of search
+     * @return Json formatted String with the response
+     * @throws IOException
+     */
     public String invoke(String val, String type) throws IOException {
         String newurl = "";
         if(type.equals(Type.TIME_SERIES_INTRADAY.name())){
@@ -23,7 +33,6 @@ public class Client {
         }else{
             newurl =  BODY + "function=" + type + "&symbol=" + val +"&apikey=" + KEY;
         }
-        
         URL obj = new URL(newurl);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
@@ -52,16 +61,21 @@ public class Client {
         }
     }
 
+    /**
+     * Method to invoke a Restfull api and get it's corresponding response made for a concurrent test client
+     * @param val value of the search
+     * @param type type of search
+     * @return Json formatted String with the response
+     * @throws IOException
+     */
     public String TestInvoke(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", USER_AGENT);
-        
         //The following invocation perform the connection implicitly before getting the code
         int responseCode = con.getResponseCode();
         //System.out.println("GET Response Code :: " + responseCode);
-        
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
